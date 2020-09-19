@@ -21,10 +21,27 @@ Introduction goes here.
     ```ruby
     bundle exec rails g spree_mx_zip_codes:install
     ```
+4. Corregir los id de los estados ya agregados, para coincidir con los datos de sepomex
+    ```ruby
+    bundle exec rake spree_sepomex:load
+    ```
 
-4. Restart your server
+5. Restart your server
 
   If your server was running, restart it so that it can find the assets properly.
+
+
+### Procedimiento manual para activar los códigos postales
+
+  Correr la consola de rails.
+  ```ruby
+  rails console
+  ```
+  Seleccionar el código postal con ActiveRecord
+  ```ruby
+  Spree::ZipCode.where(code: "XXXXX").update(status: true )
+  ```
+
 
 ## Testing
 
@@ -49,6 +66,15 @@ If you'd like to contribute, please take a look at the
 pull request.
 
 Copyright (c) 2020 [name of extension creator], released under the New BSD License
+
+- [X] Crear la tabla de codigos postales
+- [X] Asociar codigo postal con el id de estados
+- [X] Crear el endpoint para busqueda por id de estado
+- [X] Modificar la vista para mostrar un selector en el lugar del zipcode
+- [X] Agregar javascript para listado de codigos postales.
+- [ ] Crear la vista para el admin
+
+Opcionales: 
 
 - [ ] Agregar a México como id 1 en la tabla de países (hacer el initializer o dejarlo como default)
 - [ ] Pasar los seeders a esta gema. 

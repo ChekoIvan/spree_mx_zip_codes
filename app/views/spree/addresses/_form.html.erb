@@ -1,0 +1,34 @@
+<% address_id = address_type.chars.first %>
+<% Spree::Address::ADDRESS_FIELDS.each do |field| %>
+  <% if field == "country" %>
+    <p class="form-group checkout-content-inner-field" id="<%= "#{address_id}country" %>">
+      <span id="<%= "#{address_id}country-selection" %>" class="d-block position-relative">
+        <%= address_form.collection_select :country_id, available_countries, :id, :name,
+                                           { prompt: Spree.t(:country).upcase },
+                                           { class: 'required form-control spree-flat-select'} %>
+        <%= image_tag 'arrow.svg', class: 'position-absolute spree-flat-select-arrow' %>
+      </span>
+    </p>
+  <% elsif field == "state" %>
+    <div class="form-group mb-4">
+      <%= address_field(address_form, :state, address_id) { address_state(address_form, address.country, address_id) } if Spree::Config[:address_requires_state] %>
+    </div>
+  <% elsif field == "zipcode" %>
+    <div class="form-group mb-4">
+        <p class="form-group checkout-content-inner-field" id="<%= "#{address_id}zipcode" %>">
+            <span id="<%= "#{address_id}zipcode-selection" %>" class="d-block position-relative">
+                <%= address_form.collection_select :zipcode, address.zipcode ? Spree::ZipCode.where(code: address.zipcode) : [], :code, :code,
+                                            { prompt: Spree.t(:zipcode).upcase },
+                                            {  required: true, class: 'required form-control spree-flat-select'} %>
+                <%= image_tag 'arrow.svg', class: 'position-absolute spree-flat-select-arrow' %>
+            </span>
+        </p>
+        <p class="small text-danger text-right">"Tlayukit solo está disponible para los códigos postales listados"</p>
+    </div>
+  <% else %>
+    <% next if field == "company" && !Spree::Config[:company] %>
+    <% next if field == "alternative_#{address_id}_phone" && !Spree::Config["alternative_#{address_id}_phone"] %>
+    <div class="form-group mb-4">
+      <%= address_field(address_form, field.to_sym, address_id) %>
+    </div>  <% end %>
+<% end %>
