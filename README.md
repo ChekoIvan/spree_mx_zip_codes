@@ -25,6 +25,10 @@ Introduction goes here.
     ```ruby
     bundle exec rake spree_sepomex:load
     ```
+    En producción, debe hacerse desde el "current" (Del deploy con Capistrano). Anteponiendo la variable: RAILS_ENV=production
+    ```
+    RAILS_ENV=production bundle exec rake spree_sepomex:load
+    ```
 
 5. Restart your server
 
@@ -33,9 +37,9 @@ Introduction goes here.
 
 ### Procedimiento manual para activar los códigos postales
 
-  Correr la consola de rails.
+  Correr la consola de rails. (En current, cuando es en el servidor de producción)
   ```ruby
-  rails console
+  RAILS_ENV=production rails console
   ```
   Seleccionar el código postal con ActiveRecord
   ```ruby
