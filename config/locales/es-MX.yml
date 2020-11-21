@@ -1,0 +1,6 @@
+es-MX:
+  spree:
+    shipping_zip_code_check: Envío por código postal
+    shipping_zip_code_check_fail: No es posible realizar la entrega al código postal introducido
+    shipping_zip_code_not_exists: No tenemos registro de su código postal.
+    shipping_zip_code_not_price: No contamos con envío a su ubicación actualmente.
